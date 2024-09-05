@@ -1,0 +1,14 @@
+{
+  "name": "conhecendo-o-npm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor Mendes",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "loadsh": "^0.0.4"
+  }
+}

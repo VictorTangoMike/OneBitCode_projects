@@ -1,0 +1,16 @@
+{
+  "name": "exercicio-16",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor Mendes",
+  "license": "ISC",
+  "dependencies": {
+    "dayjs": "^1.11.13"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
+}
