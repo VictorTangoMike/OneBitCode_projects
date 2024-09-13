@@ -1,9 +1,9 @@
 class Installment {
-    constructor(value, number) {
-        this.value = value;
-        this.number = number;
-        this.status = 'pending';
-    }
+  constructor(value, installmentNumber) {
+    this.value = value;
+    this.installmentNumber = installmentNumber;
+    this.status = "pending";
+  }
 }
 
-module.exports = {Installment};
+module.exports = { Installment };

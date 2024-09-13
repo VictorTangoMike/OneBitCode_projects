@@ -1,10 +1,10 @@
 class Transfer {
-    constructor( origin, destination, amount) {
-        this.origin = origin;
-        this.destination = destination;
-        this.amount = amount;
-        this.created_at = new Date();
-    }
+  constructor(origin, destination, value) {
+    this.origin = origin;
+    this.destination = destination;
+    this.value = value;
+    this.created_at = new Date();
+  }
 }
 
-module.exports = {Transfer};
+module.exports = { Transfer };
