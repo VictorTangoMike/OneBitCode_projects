@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Finanças</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <form action="" method="get">
+            <input type="hidden" name="id" id="id">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name">
+            <label for="value">Valor:</label>
+            <input type="number" step="0.01" name="value" id="value">
+            <br><br>
+            <button>Salvar</button>
+        </form>
+        <div>
+            <h2>Saldo: <span id="balance"></span></h2>
+            <h2>Historico de Transações</h2>
+            <section id="transactions"></section>
+        </div>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+</html>
