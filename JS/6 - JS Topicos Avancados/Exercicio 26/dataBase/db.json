@@ -1,14 +1,19 @@
 {
   "transactions": [
     {
-      "id": "47d2",
       "name": "Salario",
-      "value": 10000
+      "value": 2400,
+      "id": "47d2"
     },
     {
       "id": "f16f",
       "name": "Carro 2/100",
       "value": -800
+    },
+    {
+      "id": "ae20",
+      "name": "Travesseiro",
+      "value": -179.9
     }
   ]
 }

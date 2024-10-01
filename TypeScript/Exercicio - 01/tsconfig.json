@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "outFile": "public/dist/main.js",
+    "removeComments": true
+  }
+}
