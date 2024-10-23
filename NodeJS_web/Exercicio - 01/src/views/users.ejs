@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usuários</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Usuários Cadastrados</h1>
+    <ul>
+      <% users.forEach(user=> { %>
+        <li>
+          <span>
+            <%= user.username %> - <%= user.email %>
+          </span>
+          <span>
+            <form action="/users/delete" method="post">
+              <input type="hidden" name="username" value="<%= user.username %>">
+              <button type="submit" class="btn-delete">Excluir</button>
+            </form>
+          </span>
+        </li>
+        <% }); %>
+    </ul>
+    <a href="/">Voltar para a Home</a>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de e-mail</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <h1>Receba nossa Newsletter</h1>
+  <section>
+    <h2>Cadastro</h2>
+    <form action="/register" method="post" class="register-form">
+      <label for="username">Nome do usuário:</label>
+      <input type="text" name="username" id="username" required>
+      <label for="email">E-mail:</label>
+      <input type="email" name="email" id="email" required>
+
+      <button type="submit">Cadastrar</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Visualizar e-mails cadastrados</h2>
+    <a href="/users">Visualizar</a>
+  </section>
+
+
+</body>
+
+</html>
