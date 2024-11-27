@@ -2,22 +2,22 @@ import { newF, rdFile, edFile, delFile } from "./funtions.mjs";
 
 async function start() {
   await newF(
-    "./olaMundo.txt",
+    "./meuarquivo.txt",
     "Conteúdo inicial do arquivo.\nCriado com o módulo fs do Node.js.\n"
   );
 
   console.log("Lendo arquivo antes de alterar.\n");
-  await rdFile("./olaMundo.txt");
+  await rdFile("./meuarquivo.txt");
   //Editando arquivo
 
-  await edFile("./olaMundo.txt", "Conteúdo modificado!");
+  await edFile("./meuarquivo.txt", "Conteúdo modificado!");
 
   //Lendo arquivo
   console.log("Lendo arquivo após alterar.\n");
-  await rdFile("./olaMundo.txt");
+  await rdFile("./meuarquivo.txt");
 
   //Excluindo arquivo
-  await delFile("./olaMundo.txt");
+  await delFile("./meuarquivo.txt");
 }
 
 start();

@@ -2,8 +2,8 @@ import fs from "node:fs";
 
 export function newF(filePath, content) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(filePath, content, "utf-8", (err) => {
-      if (err) {
+    fs.writeFile(filePath, content, "utf-8", (error) => {
+      if (error) {
         reject("Erro ao escrever arquivo: ", error.message);
       } else {
         resolve();
@@ -14,8 +14,8 @@ export function newF(filePath, content) {
 
 export function rdFile(filePath) {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, "utf-8", (err, data) => {
-      if (err) {
+    fs.readFile(filePath, "utf-8", (error, data) => {
+      if (error) {
         reject("Erro ao ler arquivo: ", error.message);
       } else {
         console.log(data);
@@ -27,8 +27,8 @@ export function rdFile(filePath) {
 
 export function edFile(filePath, content) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(filePath, content, "utf-8", (err) => {
-      if (err) {
+    fs.writeFile(filePath, content, "utf-8", (error) => {
+      if (error) {
         reject("Erro ao editar arquivo: ", error.message);
       } else {
         console.log("Arquivo excluído com sucesso!");
@@ -40,8 +40,8 @@ export function edFile(filePath, content) {
 
 export function delFile(filePath) {
   return new Promise((resolve, reject) => {
-    fs.unlink(filePath, (err) => {
-      if (err) {
+    fs.unlink(filePath, (error) => {
+      if (error) {
         reject("Erro ao deletar arquivo: ", error.message);
       } else {
         resolve();
