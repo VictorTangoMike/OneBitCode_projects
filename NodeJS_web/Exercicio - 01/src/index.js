@@ -39,7 +39,7 @@ app.post("/users/delete", (req, res) => {
   res.redirect("/users");
 });
 
-const PORT = 3000;
+const PORT = 3007;
 app.listen(PORT, () =>
   console.log(`Servidor rodando em: http://localhost:${PORT}/`)
 );

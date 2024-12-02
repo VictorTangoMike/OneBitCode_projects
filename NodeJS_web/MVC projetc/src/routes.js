@@ -1,12 +1,19 @@
 const express = require('express')
-const postsController = require('./controllers/postController')
+const postController = require('./controllers/postController')
+const adminController = require('./controllers/adminController')
 
-const routes = express.Router()
+const router = express.Router()
 
-// Rota para a página inicial do blog
-routes.get('/', postsController.index)
+router.get('/', postController.index)
 
-// Rota para exibir um post específico
-routes.get('/posts/:id', postsController.show)
+router.get('/posts/:id', postController.show)
 
-module.exports = routes
+// Rotas para páginas administrativas
+router.get('/admin', adminController.showAdminPage)
+router.get('/admin/create', adminController.showCreatePage)
+router.post('/admin/create', adminController.createPost)
+router.get('/admin/edit/:id', adminController.showEditPage)
+router.post('/admin/update/:id', adminController.updatePost)
+router.post('/admin/delete/:id', adminController.deletePost)
+
+module.exports = router

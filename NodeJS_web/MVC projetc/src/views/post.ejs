@@ -11,23 +11,27 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1>
-      <%= post.title %>
-    </h1>
-    <div class="post-date">
-      <span>Criado em: <%= post.createdAt.toLocaleDateString() %></span>
-      /
-      <span>Atualizado em: <%= post.updatedAt.toLocaleDateString() %></span>
-    </div>
-    <p class="post-content">
-      <%= post.content %>
-    </p>
+  <%- include('partials/header') %>
 
-    <hr class="separator">
-    
-    <a href="/" class="btn-back">Voltar para a página inicial</a>
-  </div>
+    <div class="container">
+      <h1>
+        <%= post.title %>
+      </h1>
+      <div class="post-date">
+        <span>Criado em: <%= post.createdAt.toLocaleDateString() %></span>
+        /
+        <span>Atualizado em: <%= post.updatedAt.toLocaleDateString() %></span>
+      </div>
+      <p class="post-content">
+        <%= post.content %>
+      </p>
+
+      <hr class="separator">
+
+      <a href="/" class="btn-back">Voltar para a página inicial</a>
+    </div>
+
+    <%- include('partials/footer') %>
 </body>
 
 </html>
