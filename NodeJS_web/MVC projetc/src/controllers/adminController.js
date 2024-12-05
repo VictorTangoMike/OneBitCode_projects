@@ -16,8 +16,7 @@ module.exports = {
   createPost: (req, res) => {
     const { title, content } = req.body;
 
-    const post = postModel.createPost(title, content);
-    postModel.savePost(post);
+    postModel.createPost(title, content);
 
     res.redirect("/admin");
   },

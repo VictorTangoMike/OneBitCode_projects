@@ -36,7 +36,7 @@ const postModel = {
 
   createPost: (title, content) => {
     const newPost = {
-      id: toString(new Date().getTime()),
+      id: Date.now().toString(36) + Math.random().toString(36).substr(2),
       title,
       content,
       createdAt: new Date(),
@@ -44,8 +44,6 @@ const postModel = {
     };
 
     postModel.savePost(newPost);
-
-    return newPost;
   },
 
   savePost: (post) => {
