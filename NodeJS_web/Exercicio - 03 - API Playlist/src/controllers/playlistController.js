@@ -48,11 +48,10 @@ let playlists = [
 ];
 
 function generateId() {
-  Date.now().toString(26) + Math.random().toString(26);
+  return Date.now().toString(26) + Math.random().toString(26);
 }
 
 const controller = {
-
   //Playlist Controller
 
   getAllPlaylists: (req, res) => {
@@ -61,45 +60,44 @@ const controller = {
 
   getPlayById: (req, res) => {
     const id = req.params.id;
-    res.json(playlists.find((playlist) => playlist.id === id))
+    res.json(playlists.find((playlist) => playlist.id == id));
   },
 
   getPlaylistById: (id) => {
-    return playlists.find((playlist) => playlist.id === id);
+    return playlists.find((playlist) => playlist.id == id);
   },
 
   getPlaylistIndex: (id) => {
-    return playlists.findIndex((playlist) => playlist.id === id);
+    return playlists.findIndex((playlist) => playlist.id == id);
   },
 
   save: (req, res) => {
     const { title, tags, songs } = req.body;
 
-    if (title.length = 0 || title.trim() == "") {
+    if ((title.length = 0 || title.trim() == "")) {
       return res.status(400).json({ message: "title must be a string" });
     }
 
     if (tags && !Array.isArray(tags)) {
-      return res.status(400).json({ message: 'tags must be an array' })
+      return res.status(400).json({ message: "tags must be an array" });
     }
 
     if (songs && !Array.isArray(songs)) {
-      return res.status(400).json({ message: 'songs must be an array' })
+      return res.status(400).json({ message: "songs must be an array" });
     }
-    
 
     const newPlaylist = {
       id: generateId(),
       title,
       tags: tags ?? [],
       songs: songs ?? [],
-    }
+    };
 
     playlists.push(newPlaylist);
 
     res.status(201).json(newPlaylist);
   },
-  
+
   update: (req, res) => {
     const { id } = req.params;
     const { title, tags } = req.body;
@@ -109,7 +107,7 @@ const controller = {
     if (playlistIndex === -1) {
       return res.status(404).json({ message: "Playlist not found" });
     }
-    
+
     if (title && title.length > 0) {
       playlists[playlistIndex].title = title;
     }
@@ -128,15 +126,15 @@ const controller = {
     if (playlistIndex === -1) {
       return res.status(404).json({ message: "Playlist not found" });
     }
-    
+
     const newPlaylistList = playlists.splice(playlistIndex, 1);
 
-    res.status(202).json(newPlaylistList)
+    res.status(202).json(newPlaylistList);
   },
 
   // Song Controller
   getAllSongsByPlaylist: (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
 
     const playlistIndex = controller.getPlaylistIndex(id);
 
@@ -148,7 +146,7 @@ const controller = {
   },
 
   addSong: (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
     const { title, duration, artist, album, year } = req.body;
 
     const playlist = controller.getPlaylistById(id);
@@ -157,8 +155,13 @@ const controller = {
       return res.status(404).json({ message: "Playlist not found" });
     }
 
-    if (!title ||!duration ||!artist ||!album || !year) {
-      return res.status(400).json({ message: "All fields are required: title, duration, artist, album and year" });
+    if (!title || !duration || !artist || !album || !year) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "All fields are required: title, duration, artist, album and year",
+        });
     }
 
     const newSong = {
@@ -184,16 +187,18 @@ const controller = {
       return res.status(404).json({ message: "Playlist not found" });
     }
 
-    songIndex = playlist.songs.findIndex(s => s.id === +songId);
-    
+    const songIndex = playlist.songs.findIndex((song) => song.id == +songId);
+
+    console.log(songIndex, playlist.id, songId, playlist.songs);
+
     if (songIndex === -1) {
       return res.status(404).json({ message: "Song not found" });
     }
-    
-    laylist.songs.splice(songIndex, 1);
 
-    res.status(204).end()
-  }
+    playlist.songs.splice(songIndex, 1);
+
+    res.status(204).end();
+  },
 };
 
 module.exports = controller;
