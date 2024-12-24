@@ -1,0 +1,16 @@
+{
+  "name": "exercicio---04---api-protegida",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [],
+  "author": "Victor Mendes <victorhgabriel3@gmail.com> (https://github.com/VictorTangoMike)",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
