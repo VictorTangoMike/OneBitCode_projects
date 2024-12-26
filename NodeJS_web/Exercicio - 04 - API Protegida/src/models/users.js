@@ -27,8 +27,6 @@ module.exports = {
 
   findById: (id) => users.find((u) => u.id === id),
 
-  findByUsername: (username) => users.find((u) => u.username === username),
-
   findByEmail: (email) => users.find((u) => u.email === email),
 
   newUser: (username, email, password) => {
@@ -47,25 +45,67 @@ module.exports = {
     }
 
     users.push(newUser)
+  
+    newUser.password = undefined
+  
     return newUser
   },
+  
+  adminNewUser: (username, email, password, role) => {
+    const alreadyExists = users.find((u) => u.email === email)
 
-  updateUser: (idUpdated, password, role, idUpdating) => {
-    const userUpdated = this.findById(idUpdated)
-    const userUpdating = this.findById(idUpdating)
-
-    if (!userUpdated) {
+    if (alreadyExists) {
       return null
     }
 
-    if (password) {
-      userUpdated.password = password
+    const newUser = {
+      id: Date.now().toString(26) + Math.random().toString(26),
+      username,
+      email,
+      password,
+      role
     }
 
-    if (userUpdating.role === 'admin' && role) {
-      userUpdated.role = role
+    users.push(newUser)
+
+    newUser.password = undefined
+
+    return newUser
+  },
+
+
+  updateRole: (idUpdated, role, userUpdating) => {
+    const userUpdated = users.find((u) => u.id === idUpdated)
+
+    if (!userUpdated || !role) {
+      return ("Please provide valid input")
     }
+
+    if (!userUpdating) {
+      return ("Authentication is required")
+    }
+
+    if (userUpdating.role !== 'admin') {
+      return ("Unauthorized")
+    }
+
+    userUpdated.role = role
+
     return userUpdated
+  },
+
+  updatePassword: (id, password, newPassword) => {
+    const user = users.find((u) => u.id === id)
+
+    if (!user || !password) {
+      return null
+    }
+
+    if (user.password === password) {
+      user.password = newPassword
+    }
+
+    return user
   },
 
   deleteUser: (id) => {
@@ -79,7 +119,7 @@ module.exports = {
 
     const newList = users.splice(index, 1)
 
-    return newList
+    return [newList]
   },
 
   loginMethod: (email, password) => {

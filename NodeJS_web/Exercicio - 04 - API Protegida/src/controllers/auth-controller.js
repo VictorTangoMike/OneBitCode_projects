@@ -19,6 +19,28 @@ module.exports = {
     res.status(201).json(newUser)
   },
 
+  adminRegister: (req, res) => {
+    const userAcess = req?.authenticatedUser ?? 'visitante'
+
+    if (userAcess !== 'admin') {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
+
+    const { username, password, email, role } = req.body
+
+    if (typeof username !== 'string' || typeof email !== 'string') {
+      return res.status(400).json({ error: 'Please provide valid input' })
+    }
+
+    const newUser = users.adminNewUser(username, email, password, role)
+
+    if (!newUser) {
+      return res.status(400).json({ error: 'E-mail already exists' })
+    }
+
+    res.status(201).json(newUser)
+  },
+
   login: (req, res) => {
     const { email, password } = req.body
 
