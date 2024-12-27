@@ -1,6 +1,7 @@
+require('dotenv').config()
+
 const jwt = require('jsonwebtoken')
-const { JWT_SECRET } = require('../config/enviroment')
-const users = require('../models/users')
+const usersModel = require('../models/usersModel')
 
 module.exports = {
   optionalAuth: (req, res, next) => {
@@ -12,10 +13,9 @@ module.exports = {
       const token = authHeader.split(' ')[1]
 
       try {
-        const { id } = jwt.verify(token, JWT_SECRET)
+        const { id } = jwt.verify(token, process.env.JWT_SECRET)
 
-        const user = users.findById(id)
-        if (!user) return res.status(404).json({ message: 'User not found!' })
+        const user = usersModel.findById(id)
 
         req.authenticatedUser = user
         next()

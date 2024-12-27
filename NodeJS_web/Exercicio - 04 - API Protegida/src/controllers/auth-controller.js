@@ -1,6 +1,7 @@
+require('dotenv').config()
+
 const jwt = require('jsonwebtoken')
-const { JWT_SECRET } = require('../config/enviroment')
-const users = require('../models/users')
+const usersModel = require('../models/usersModel')
 
 module.exports = {
   register: (req, res) => {
@@ -10,19 +11,15 @@ module.exports = {
       return res.status(400).json({ error: 'Please provide valid input' })
     }
 
-    const newUser = users.newUser(username, email, password)
+    const newUser = usersModel.newUser(username, email, password)
 
-    if (!newUser) {
-      return res.status(400).json({ error: 'User already exists' })
-    }
-
-    res.status(201).json(newUser)
+    res.status(201).json({newUser})
   },
 
   adminRegister: (req, res) => {
     const userAcess = req?.authenticatedUser ?? 'visitante'
 
-    if (userAcess !== 'admin') {
+    if (userAcess.role !== 'admin') {
       return res.status(401).json({ error: 'Unauthorized' })
     }
 
@@ -32,13 +29,9 @@ module.exports = {
       return res.status(400).json({ error: 'Please provide valid input' })
     }
 
-    const newUser = users.adminNewUser(username, email, password, role)
+    const newUser = usersModel.adminNewUser(username, email, password, role)
 
-    if (!newUser) {
-      return res.status(400).json({ error: 'E-mail already exists' })
-    }
-
-    res.status(201).json(newUser)
+    res.status(201).json({ ...newUser, password: undefined })
   },
 
   login: (req, res) => {
@@ -48,14 +41,10 @@ module.exports = {
       return res.status(400).json({ error: 'Please provide all fields' })
     }
 
-    const user = users.loginMethod(email, password)
-
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' })
-    }
+    const user = usersModel.loginMethod(email, password)
 
     const payload = { id: user.id, email: user.email }
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' })
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
 
     res.json({ token })
   },

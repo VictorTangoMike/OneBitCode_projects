@@ -1,13 +1,21 @@
-const users = require('../models/users')
+const usersModel = require('../models/usersModel')
 
 module.exports = {
-  listUsers: (req, res) => {
+  listAllUsers: (req, res) => {
     const userAcess = req?.authenticatedUser ?? 'visitante'
 
     if (userAcess.role === 'admin') {
-      return res.status(200).json(users.findAll())
+      return res
+        .status(200)
+        .json({ ...usersModel.findAll(), password: undefined })
     }
     res.status(401).json({ error: 'Unauthorized' })
+  },
+
+  getUser: (req, res) => {
+    const { id } = req.params
+    const user = usersModel.findById(id)
+    res.status(200).json({ ...user, password: undefined })
   },
 
   deleteUser: (req, res) => {
@@ -20,27 +28,20 @@ module.exports = {
       !userAcess
     ) {
       return res.status(401).json({ error: 'Unauthorized' })
+    } else {
+      usersModel.deleteUser(id)
     }
 
-    const deletedUser = users.findById(id)
+    const deletedUser = usersModel.findById(id)
 
-    const newList = users.deleteUser(id)
-
-    if (!newList) {
-      return res.status(404).json({ error: 'User not found' })
-    }
-    res.status(200).json(deletedUser)
+    res.status(200).json({ ...deletedUser, password: undefined })
   },
 
   updatePassword: (req, res) => {
     const { id } = req.params
     const { password, newPassword } = req.body
 
-    const user = users.updatePassword(id, password, newPassword)
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' })
-    }
+    const user = usersModel.updatePassword(id, password, newPassword)
 
     res.status(201).json(user.id)
   },
@@ -51,17 +52,7 @@ module.exports = {
 
     const userUpdating = req?.authenticatedUser
 
-    const user = users.updateRole(id, role, userUpdating)
-
-    if (user === 'Please provide valid input') {
-      return res.status(404).json({ error: `${user}` })
-    }
-    if (user === 'Authentication is required') {
-      return res.status(401).json({ error: `${user}` })
-    }
-    if (user === 'Unauthorized') {
-      return res.status(401).json({ error: `${user}` })
-    }
+    const user = usersModel.updateRole(id, role, userUpdating.id)
 
     res.status(201).json(user.id)
   },
