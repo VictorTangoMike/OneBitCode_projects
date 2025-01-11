@@ -2,10 +2,15 @@ const express = require('express')
 const auth = require('./controllers/auth-controller')
 const users = require('./controllers/users-controller')
 const { optionalAuth } = require('./middlewares/auth-middleware')
+const RateLimit = require('express-rate-limit')
+const limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+})
 
 const routes = express.Router()
 
-routes.get('/welcome', optionalAuth, (req, res) => {
+routes.get('/welcome', limiter, optionalAuth, (req, res) => {
   const displayName = req.authenticatedUser?.username ?? req.authenticatedUser
   res.json({ message: `Seja bem-vindo(a), ${displayName}!` })
 })
