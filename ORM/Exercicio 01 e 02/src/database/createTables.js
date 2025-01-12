@@ -17,20 +17,6 @@ async function syncDatabase() {
   console.log('Table events created successfully')
 
   await query(`
-    CREATE TABLE IF NOT EXISTS transactions (
-      id UUID PRIMARY KEY,
-      event_id UUID REFERENCES events(id) NOT NULL,
-      customer_id UUID REFERENCES customers(id) NOT NULL,
-      tickets_quantity INT NOT NULL,
-      total_amount DECIMAL(10, 2) NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      deleted_at TIMESTAMP DEFAULT NULL
-    );
-    `)
-  console.log('Table transactions created successfully')
-
-  await query(`
     CREATE TABLE IF NOT EXISTS customers (
       id UUID PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
@@ -41,6 +27,22 @@ async function syncDatabase() {
     );
     `)
   console.log('Table customers created successfully')
+
+  await query(`
+    CREATE TABLE IF NOT EXISTS transactions (
+      id UUID PRIMARY KEY,
+      event_id UUID NOT NULL,
+      customer_id UUID NOT NULL,
+      tickets_quantity INT NOT NULL,
+      total_amount DECIMAL(10, 2) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      deleted_at TIMESTAMP DEFAULT NULL,
+      FOREIGN KEY (event_id) REFERENCES events (id),
+      FOREIGN KEY (customer_id) REFERENCES customers (id)
+    );
+    `)
+  console.log('Table transactions created successfully')
 
   process.exit(1)
 }
